@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     # mis modulos
     'app.apps.AppConfig',
+    'contacto.apps.ContactoConfig',
     'registration.apps.RegistrationConfig',
     'pedidos.apps.PedidosConfig',
 ]

@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('app.urls')),
     path('', include('registration.urls')),
     path('', include('pedidos.urls')),
+    path('', include('contacto.urls')),
 ]
 
 

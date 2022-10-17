@@ -155,7 +155,7 @@ footer > .logo_footer > img {
 /*FIN FOOTER*/
 
 
-input[type=text], input[type=email],
+input[type=text], input[type=email], input[type=password],
 input[type=number], select, textarea {
 
     width: 100%;
