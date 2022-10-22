@@ -4,63 +4,63 @@
 <head>
     <!-- Load an icon library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+<header id="header">
+    <img class="menu" src="{% static 'img/menuiconwhite.png' %}" alt="menu" id="menu">
+    <div class="contenedor_logo">
+        <img class="logo" src="{% static 'img/tecnomarketpngicono.png' %}" alt="logo"> &nbsp;&nbsp;&nbsp;&nbsp;
 
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
-    <header id="header">
-        <img class="menu" src="{% static 'img/menuiconwhite.png' %}" alt="menu" id="menu">
-        <div class="contenedor_logo">
-            <img class="logo" src="{% static 'img/tecnomarketpngicono.png' %}" alt="logo"> &nbsp;&nbsp;&nbsp;&nbsp;
+        <h4>
+            <a href="{% url 'profile' %}" style="color: yellow;"> Hola {{request.user}} </a>
+        </h4>
 
-            <h4>
-                <a href="{% url 'profile' %}" style="color: yellow;"> Hola {{request.user}} </a>
-            </h4>
+    </div>
 
-        </div>
+    <div>
+        <nav id="nav">
+            <ul>
+                
+                <li>
+                    <a class="active" href="{% url 'home' %}"><i class="fa fa-fw fa-home"></i> Inicio</a>
+                </li>
+                <li>
+                    <a href="{% url 'contacto' %}""><i class=" fa fa-fw fa-envelope"></i> Contacto</a>
+                </li>
+                <li>
+                    <a href="{% url 'catalogo' %}"><i class="fa fa-fw fa-picture-o" aria-hidden="true"></i> Catalogo</a>
+                </li>
 
-        <div>
+                {% if user.is_authenticated %}
+                <li>
+                    <a href="{% url 'logout' %}"><i class="fa fa-fw fa-user"></i> Logout</a>
+                </li>
 
-            <nav id="nav">
-                <ul>
-                    <li>
-                        <a class="active" href="{% url 'home' %}"><i class="fa fa-fw fa-home"></i> Inicio</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'contacto' %}""><i class="fa fa-fw fa-envelope"></i> Contacto</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'catalogo' %}"><i class="fa fa-fw fa-picture-o" aria-hidden="true"></i> Catalogo</a>
-                    </li>
+                <li>
+                    <button type="button" class="btn btn-success">
+                        <a class="navbar-brand" href="#" style="color: yellow;">
+                            <i class="fa fa-shopping-bag" aria-hidden="true"></i> Compras
+                            <span class="badge bg-danger">4</span> </a>
+                    </button>
+                    <!--<a href="{% url 'profile' %}" style="color: yellow;"> Hola {{ request.user}} </a>-->
+                </li>
 
-                    {% if user.is_authenticated %}
-                    <li>
-                        <a href="{% url 'logout' %}"><i class="fa fa-fw fa-user"></i> Logout</a>
-                    </li>
+                {% else %}
+                <li>
+                    <a href="{% url 'login' %}"><i class="fa fa-fw fa-user"></i> Login</a>
+                </li>
+                <li>
+                    <a href="{% url 'register' %}"><i class="fa fa-fw fa-address-card-o" aria-hidden="true"></i>
+                        Registro</a>
+                </li>
+                {% endif %}
 
-                    <li>
-                        <button type="button" class="btn btn-success">
-                            <a class="navbar-brand" href="#" style="color: yellow;">
-                                <i class="fa fa-shopping-bag" aria-hidden="true"></i> Compras
-                                <span class="badge bg-danger">4</span> </a>
-                        </button>
-                        <!--<a href="{% url 'profile' %}" style="color: yellow;"> Hola {{ request.user}} </a>-->
-                    </li>
+            </ul>
+        </nav>
 
-                    {% else %}
-                    <li>
-                        <a href="{% url 'login' %}"><i class="fa fa-fw fa-user"></i> Login</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'register' %}"><i class="fa fa-fw fa-address-card-o" aria-hidden="true"></i>
-                            Registro</a>
-                    </li>
-                    {% endif %}
+    </div>
 
-                </ul>
-            </nav>
-
-        </div>
-
-    </header>
+</header>
 
 </html>
