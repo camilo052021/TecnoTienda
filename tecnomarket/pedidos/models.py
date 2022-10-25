@@ -4,23 +4,24 @@ from django.db.models import CASCADE
 import os
 # Create your models here.
 
-def subirImagenProducto(instance, filename):
-    old_instance = Producto.objects.get(pk=instance.pk)
-    #validamos si existe la imagen anterior
-    if old_instance.imagen_producto:
-        # asignamos una variable para el manejo del arrchivo:
-        imagen = old_instance.imagen_producto
-        # Validamos si efectivamente es un archivo:
-        if imagen.file:
-            # Si es un archivo,tomaremos su ubicación:
-            if os.path.isfile(imagen.path):
-                #cerramos el archivo si se encuentra en uso
-                imagen.file.close()
-                # Eliminamos el archivo usando los métodos del sistema operativo:
-                os.remove(imagen.path)
+# def subirImagenProducto(instance, filename):
+#     old_instance = Producto.objects.get(pk=instance.pk)
+#     #validamos si existe la imagen anterior
+#     if old_instance.imagen_producto:
+#         # asignamos una variable para el manejo del arrchivo:
+#         imagen = old_instance.imagen_producto
+#         # Validamos si efectivamente es un archivo:
+#         if imagen.file:
+#             # Si es un archivo,tomaremos su ubicación:
+#             if os.path.isfile(imagen.path):
+#                 #cerramos el archivo si se encuentra en uso
+#                 imagen.file.close()
+#                 # Eliminamos el archivo usando los métodos del sistema operativo:
+#                 os.remove(imagen.path)
 
-    old_instance.imagen_producto.delete()
-    return 'static/img/produtos/' + filename
+#     old_instance.imagen_producto.delete()
+#     return 'static/img/produtos/' + filename
+
 
 class Categoria(models.Model):
     # atributos propios
@@ -34,24 +35,51 @@ class Categoria(models.Model):
 
     def __str__(self):
         return f'{self.nombre_categoria}'
-    
 
-class Producto(models.Model):
+
+
+class Marca(models.Model):
+    # atributos propios
     categoria = models.ForeignKey(Categoria, on_delete = CASCADE)
-    nombre_producto = models.CharField(verbose_name = 'Nombre', max_length=50)
-    descripcion_producto = models.TextField(verbose_name = 'Descripción', null = True, blank = True)
-    imagen_producto = models.ImageField(verbose_name = 'Imagen Producto', upload_to = subirImagenProducto, null = True, blank = True)
-    costo_producto = models.DecimalField(verbose_name = 'Costo Producto', max_digits = 20, decimal_places = 2)
-    precio = models.DecimalField(verbose_name = 'Precio', max_digits = 20, decimal_places = 2)
-    cant_stock = models.IntegerField(verbose_name = 'Cantidada Disponible', validators=[MinValueValidator(0), MaxValueValidator(9999)])
-    disponibilidad = models.BooleanField(default=True)
+    nombre_marca = models.CharField(verbose_name = 'Nombre SubCategoría', max_length = 50)
     # Atributos de Auditoria:
     created = models.DateTimeField(auto_now_add=True, verbose_name = 'Fecha Creación')
     updated = models.DateTimeField(auto_now=True, verbose_name='Fecha Actualización')
 
     class Meta:
+        verbose_name_plural = 'Sub Categoria'
+
+    def __str__(self):
+        return f'{self.nombre_marca}'
+
+
+class Producto(models.Model):
+    categoria = models.ForeignKey(Categoria, on_delete = CASCADE)
+    marca = models.ForeignKey(Marca, on_delete = CASCADE)
+    nombre_producto = models.CharField(verbose_name = 'Nombre', max_length=50)
+    descripcion_producto = models.TextField(verbose_name = 'Descripción', null = True, blank = True)
+    imagen_producto = models.ImageField(verbose_name = 'Imagen Producto', upload_to = "productos/", null = True, blank = True)
+    costo_producto = models.DecimalField(verbose_name = 'Costo Producto', max_digits = 20, decimal_places = 2)
+    precio = models.DecimalField(verbose_name = 'Precio', max_digits = 20, decimal_places = 2)
+    cant_stock = models.IntegerField(verbose_name = 'Cantidada Disponible', validators=[MinValueValidator(0), MaxValueValidator(9999)])
+    disponibilidad = models.BooleanField(default=True)
+    slug = models.SlugField(max_length = 50, null=True, blank=True)
+    # Atributos de Auditoria:
+    created = models.DateTimeField(auto_now_add=True, verbose_name = 'Fecha Creación')
+    updated = models.DateTimeField(auto_now=True, verbose_name='Fecha Actualización')
+
+    def subirImagen(self):
+        if self.imagen_producto:
+            if os.path.isfile(self.imagen_producto.path):
+                    # Cerramos el archivo por si se encuentra en uso:
+                self.imagen_producto.file.close()
+                # Eliminamos el archivo usando los métodos del sistema operativo:
+                os.remove(self.imagen_producto.path)
+            return '{}'.format( self.imagen_producto)
+        
+    class Meta:
         verbose_name_plural = 'Productos'
+
     def __str__(self):
         return f'{self.nombre_producto}'
 
-       

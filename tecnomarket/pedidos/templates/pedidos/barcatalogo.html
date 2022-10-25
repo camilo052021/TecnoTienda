@@ -1,17 +1,32 @@
 <html>
-	<head>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    </head>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/navcatalog.css' %}">
-	</head>
-	<body>
-		<div id="header">
-			<ul class="nav">
-				<li><a href="">Nuestros productos</a>
-					<ul>
-                        <li><a href="">Submenu1</a>
-							<ul>
+
+<head>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/navcatalog.css' %}">
+</head>
+
+<body>
+	<div id="header">
+		<ul class="nav">
+			<li><a href="">Nuestros productos</a>
+				<ul>
+					{% for categoria in categorias %}
+					<li>
+						<a href=""> {{ categoria }} </a>
+					</li>
+					{% endfor %}
+				</ul>
+			</li>
+		</ul>
+	</div>
+</body>
+
+</html>
+
+
+<!--<ul>
                                 <li><a href="">Submenu1</a>
                                     <ul>
                                         <li><a href="">Submenu1</a></li>
@@ -24,21 +39,16 @@
 								<li><a href="">Submenu3</a></li>
 								<li><a href="">Submenu4</a></li>
 							</ul>
-						</li>
-                        
-						<li><a href="">Submenu2</a></li>
-						<li><a href="">Submenu3</a></li>
-						<li><a href="">Submenu4</a>
-							<ul>
+
+													<li><a href="">Computadores</a></li>
+						<li><a href="">Tabletas</a></li>
+						<li><a href="">Accesorios</a>
+
+														<ul>
 								<li><a href="">Submenu1</a></li>
 								<li><a href="">Submenu2</a></li>
 								<li><a href="">Submenu3</a></li>
 								<li><a href="">Submenu4</a></li>
 							</ul>
-						</li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-	</body>
-</html>
+						
+-->

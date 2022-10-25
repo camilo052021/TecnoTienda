@@ -5,48 +5,46 @@
 
 {% include 'pedidos/barcatalogo.html' %}
 
-    <div id="contenido">
+<div id="contenido">
 
-        <div class="galeria">
+    <div class="galeria">
 
-            {% for item in productos %}
+        {% for item in object_list %}
 
-            <div class="contenedor_producto">
-                <br>
-                <br>
-                <a data-fancybox="gallery" href="{{ item.imagen_producto.url }}"><img
-                        src="{{ item.imagen_producto.url }}" alt="{% static 'media/img/nodisponible.png' %}"></a>
+        <div class="contenedor_producto">
+            <br>
+            <br>
+            <a data-fancybox="gallery" href="{{ item.imagen_producto.url }}"><img src="{{ item.imagen_producto.url }}"
+                    alt="{% static 'media/img/nodisponible.png' %}"></a>
 
 
-                <div class="detalle" style="text-align: center;">
+            <div class="detalle" style="text-align: center;">
 
-                    <div class="card-body">
-                        <h3 class="card-title">{{ item.nombre_producto }}</h3>
+                <div class="card-body">
+                    <h3 class="card-title">{{ item.nombre_producto }}</h3>
 
-                        <div class="row justify-content-between">
-                            <h5 class="card-text text-success col-12 align-self-center">
-                                Hoy: $ {{ item.precio }}
-                            </h5>
-                            <div class="card-footer text-center">
-                                <a href="#" class="col-8 btn btn-lg btn-primary">
-                                    <small>Agregar </small>
-                                    <i class="bi bi-cart-plus-fill"></i>
-                                </a>
-                            </div>
+                    <div class="row justify-content-between">
+                        <h5 class="card-text text-success col-12 align-self-center">
+                            Hoy: $ {{ item.precio }}
+                        </h5>
+                        <div class="card-footer text-center">
+                            <a href="#" class="col-8 btn btn-lg btn-primary">
+                                <small>Agregar </small>
+                                <i class="bi bi-cart-plus-fill"></i>
+                            </a>
                         </div>
-                    </div>
-
-                    <div class="card-footer">
-                        <small class="text-muted">Categoría : <strong>{{ item.categoria }}</strong></small>
                     </div>
                 </div>
 
+                <div class="card-footer">
+                    <small class="text-muted">Categoría : <strong>{{ item.categoria }}</strong></small>
+                </div>
             </div>
 
-            {% endfor %}
         </div>
+
+        {% endfor %}
     </div>
+</div>
 
-
-
-    {% endblock %}
+{% endblock %}

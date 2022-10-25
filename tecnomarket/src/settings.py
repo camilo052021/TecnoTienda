@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #crispy forms
     'crispy_forms',
+    #modulos librerias externas
+    'mptt',
 
     # mis modulos
     'app.apps.AppConfig',
