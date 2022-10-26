@@ -3,7 +3,32 @@
 {% load static %}
 {% block content %}
 
-{% include 'pedidos/barcatalogo.html' %}
+
+<link rel="stylesheet" href="{% static 'css/navcatalog.css' %}">
+<div id="header">
+    <ul class="nav">
+        <li><a href="">Nuestros productos</a>
+            <ul>
+                {% for categoria in categorias %}
+                <li>
+                    <a href=""> {{ categoria }} </a>
+                    <ul>
+                        {% for marca in marcas %}
+
+                        {% if marca.categoria_id == categoria.id %}
+
+                            <li><a href=""> {{ marca.nombre_marca }} </a></li>
+
+                        {% endif %}
+
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% endfor %}
+            </ul>
+        </li>
+    </ul>
+</div>
 
 <div id="contenido">
 

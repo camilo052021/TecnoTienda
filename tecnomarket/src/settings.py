@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     #crispy forms
     'crispy_forms',
     #modulos librerias externas
-    'mptt',
 
     # mis modulos
     'app.apps.AppConfig',
@@ -75,6 +74,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'app.context_processor.categoria',
             ],
         },
     },
