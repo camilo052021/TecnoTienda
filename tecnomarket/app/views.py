@@ -9,7 +9,7 @@ class HomePageView(TemplateView):
     template_name = 'app/home.html'
 
 # atributos propios:
-    context = {'tituo': 'Tienda Virtual'}
+    context = {'titulo': 'Tienda Virtual'}
 
 # Utilizando los métodos de la clase, sobreescribios get:
     def get(self, request, *args, **kwargs):
