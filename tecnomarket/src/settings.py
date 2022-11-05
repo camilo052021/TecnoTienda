@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
     # mis modulos
     'app.apps.AppConfig',
+    'carro.apps.CarroConfig',
     'contacto.apps.ContactoConfig',
     'registration.apps.RegistrationConfig',
     'pedidos.apps.PedidosConfig',
@@ -76,7 +77,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'app.context_processor.categoria',
-                'app.context_processor.carritoCompras',
+                'carro.context_processor.carritoCompras',
             ],
         },
     },
