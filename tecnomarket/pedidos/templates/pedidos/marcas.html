@@ -1,0 +1,34 @@
+{% extends 'app/base.html' %}
+{% block title %}Catálogo{% endblock %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/navcatalog.css' %}">
+<div id="header">
+    <ul class="nav">
+        <li><a href="{% url 'catalogo' %}">Nuestros productos</a>
+            <ul>
+                {% for categoria in categorias %}
+                <li>
+                    <a href="{% url 'categoria' categoria.id %}"> {{ categoria }} </a>
+                    <ul>
+                        {% for marca in marcas %}
+
+                        {% if marca.categoria_id == categoria.id %}
+
+                        <li><a href="{% url 'marca' marca.id %}"> {{ marca.nombre_marca }} </a></li>
+
+                        {% endif %}
+
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% endfor %}
+            </ul>
+        </li>
+    </ul>
+</div>
+
+
+{% endblock %}
+

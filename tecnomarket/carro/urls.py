@@ -1,7 +1,6 @@
 from django.urls import path
 from . import views
 
-
 urlpatterns =[
     # urls para le carro de compras
     path('carro/', views.carro, name='carro'),

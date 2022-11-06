@@ -1,0 +1,74 @@
+{% extends 'app/base.html' %}
+{% block title %}Catálogo{% endblock %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/navcatalog.css' %}">
+<div id="header">
+    <ul class="nav">
+        <li><a href="{% url 'catalogo' %}">Nuestros productos</a>
+            <ul>
+                {% for categoria in categorias %}
+                <li>
+                    <a href="{% url 'categoria' categoria.id %}"> {{ categoria }} </a>
+                    <ul>
+                        {% for marca in marcas %}
+
+                        {% if marca.categoria_id == categoria.id %}
+
+                        <li><a href=""> {{ marca.nombre_marca }} </a></li>
+
+                        {% endif %}
+
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% endfor %}
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div id="contenido">
+
+    <div class="galeria">
+
+        {% for producto in productos %}
+       
+        <div class="contenedor_producto">
+            <br>
+            <br>
+            <a data-fancybox="gallery" href="{{ producto.imagen_producto.url }}"><img
+                    src="{{ producto.imagen_producto.url }}" alt="{% static 'media/img/nodisponible.png' %}"></a>
+
+
+            <div class="detalle" style="text-align: center;">
+
+                <div class="card-body">
+                    <h3 class="card-title">{{ producto.nombre_producto }}</h3>
+
+                    <div class="row justify-content-between">
+                        <h5 class="card-text text-success col-12 align-self-center">
+                            Hoy: $ {{ producto.precio }}
+                        </h5>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'agregar' producto.id %}" class="col-8 btn btn-lg btn-primary">
+                                <small>Agregar </small>
+                                <i class="bi bi-cart-plus-fill"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <small class="text-muted">Categoría : <strong>{{ producto.categoria }}</strong></small>
+                </div>
+            </div>
+
+        </div>
+       
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

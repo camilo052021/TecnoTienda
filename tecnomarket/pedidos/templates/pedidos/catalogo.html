@@ -6,11 +6,11 @@
 <link rel="stylesheet" href="{% static 'css/navcatalog.css' %}">
 <div id="header">
     <ul class="nav">
-        <li><a href="">Nuestros productos</a>
+        <li><a href="{% url 'catalogo' %}">Nuestros productos</a>
             <ul>
                 {% for categoria in categorias %}
                 <li>
-                    <a href=""> {{ categoria }} </a>
+                    <a href="{% url 'categoria' categoria.id %}"> {{ categoria }} </a>
                     <ul>
                         {% for marca in marcas %}
 
@@ -52,7 +52,7 @@
                             Hoy: $ {{ item.precio }}
                         </h5>
                         <div class="card-footer text-center">
-                            <a href="#" class="col-8 btn btn-lg btn-primary">
+                            <a href="{% url 'agregar' item.id %}" class="col-8 btn btn-lg btn-primary">
                                 <small>Agregar </small>
                                 <i class="bi bi-cart-plus-fill"></i>
                             </a>
@@ -69,6 +69,35 @@
 
         {% endfor %}
     </div>
+</div>
+
+
+<!-- Paginador de lista: -->
+<div>
+<div class="col-7 mt-2">
+    {% if is_paginated %}
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }} ">Previous</a></li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="#"></a></li>
+                {% endif %}
+                {% for i in paginator.page_range %}
+                    <li class="page-item {% if page_obj.number == i %}active{% endif %}" >
+                        <a class="page-link" href="?page={{ i }}" > {{ i }}</a>
+                    </li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }} ">Next</a></li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="#"></a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+</div>
+<!-- Fin de paginador -->
 </div>
 
 {% endblock %}
