@@ -14,6 +14,7 @@ class Carro:
                 "nombre":producto.nombre_producto,
                 "precio":str(producto.precio),
                 "cantidad":1,
+                "subtotal":1,
                 "imagen":producto.imagen_producto.url
             }
         else:
@@ -21,6 +22,7 @@ class Carro:
                 if key==str(producto.id):
                     value["cantidad"]=value["cantidad"]+1
                     value["precio"]=float(producto.precio)
+                    value["subtotal"]=float(producto.precio)*value["cantidad"]
                     break
         self.guardar_carro()
 

@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'app.apps.AppConfig',
     'carro.apps.CarroConfig',
     'contacto.apps.ContactoConfig',
+    'facturacion.apps.FacturacionConfig',
     'registration.apps.RegistrationConfig',
     'pedidos.apps.PedidosConfig',
 ]
