@@ -1,0 +1,140 @@
+{% load humanize %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/pdf.css' %}">
+<div id="invoiceholder">
+
+    <div id="headerimage"></div>
+    <div id="invoice" class="effect2">
+        <table>
+            <tr>
+                <td>
+                    <div id="invoice-top">
+                        <div class="logo"></div>
+                        <div class="info">
+                            <h2>Technomarket</h2>
+                            <p> NIT: 800-000-000 <br>
+                                technomarket@mail.com.co <br>
+                                604-604-6004 <br>
+                                Medellín/Antioquia</p>
+
+                        </div>
+                </td>
+                <td>
+                    <div class="clientlogo"></div>
+                    <div class="info">
+                        <h2>{{datos.first_name}} {{datos.last_name}}</h2>
+                        <p>
+                            {{perfil.numero_documento}}</br>
+                            {{datos.email}}</br>
+                            {{perfil.direccion}}</br>
+                            {{perfil.telefono}}</br></p>
+
+                    </div>
+                </td>
+                <td>
+                    <!--End Info-->
+                    <div class="title">
+                        <h1>Factura #1069</h1>
+                        <br>
+                        <b>Fecha Factura:</br>
+                            {{fecha}}</b>
+                    </div>
+
+                </div>
+            </td>
+         </tr>
+    </table>
+
+
+    <div id="invoice-mid">
+
+        <div id="project">
+            <h2>Descripción</h2>
+            <p>Factura por concepto de dispositivos tecnólogicos que verá con detalle en la parte inferior</p>
+        </div>
+
+    </div>
+    <!--End Invoice Mid-->
+
+    <div id="invoice-bot">
+
+        <div id="table">
+            <table>
+                <tr class="tabletitle">
+                    <td class="item">
+                        <h2>Lista Productos</h2>
+                    </td>
+                    <td class="Hours">
+                        <h2>Cant</h2>
+                    </td>
+                    <td class="Rate">
+                        <h2>Precio</h2>
+                    </td>
+                    <td class="subtotal">
+                        <h2>Sub-total</h2>
+                    </td>
+                </tr>
+
+
+                {% for pago in pagos %}
+                <tr class="service">
+                    <td class="tableitem">
+                        <p class="itemtext">{{ value.nombre }}</p>
+                    </td>
+                    <td class="tableitem">
+                        <p class="itemtext" id="cantidad">{{ value.cantidad }}</p>
+                    </td>
+                    <td class="tableitem">
+                        <p class="itemtext" id="precio">${{ pago.total_pago |intcomma}}</p>
+                    </td>
+                    <td class="tableitem">
+                        <p class="itemtext">${{ pago.iva_pago |intcomma}}</p>
+                    </td>
+                </tr>
+                {% endfor %}
+
+                <tr class="tabletitle">
+
+                    <td class="Rate">
+                        <h2>Total</h2>
+                    </td>
+                    <td>
+                        <h2>{{ Cantidad_Carro }}</h2>
+                    </td>
+                    <td></td>
+                    <td class="payment">
+                        <h2>${{ Total_Carro |intcomma }}</h2>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+        <!--End Table-->
+
+        <!-- <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                <input type="hidden" name="cmd" value="_s-xclick">
+                <input type="hidden" name="hosted_button_id" value="QRZ7QTM9XRPJ6">
+                <input type="image" src="http://michaeltruong.ca/images/paypal.png" border="0" name="submit"
+                    alt="PayPal - The safer, easier way to pay online!">
+            </form> -->
+
+
+        <div id="legalcopy">
+            <p class="legal"><strong>Thank you for your business!</strong>  Payment is expected within 31 days;
+                please process this invoice within that time. There will be a 5% interest charge per month on late
+                invoices.
+            </p>
+        </div>
+
+    </div>
+    <!--End InvoiceBot-->
+</div>
+<!--End Invoice-->
+</div><!-- End Invoice Holder-->
+<script>
+    valorunitario = document.getElementById('precio').value;
+    cantidad = document.getElementById('cantidad').value;
+    total = valorunitario * cantidad;
+    console.log(valorunitario, cantidad, total)
+    //valortotal = valorunitario *
+</script>

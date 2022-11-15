@@ -1,3 +1,4 @@
+import os
 from django.db import models
 # Paso 1: Importamos de Django el modelo de datos de Usuario:
 from django.contrib.auth.models import User

@@ -1,0 +1,65 @@
+{% extends 'app/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Pago{% endblock %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<br>
+<section class="container">
+    <div class="row">
+        <form action="" method="POST" class="row">
+            {% csrf_token %}
+           
+            <div class="col-6 mt-2">
+                <label for="">Seleccione la Forma de pago</label>
+                {{ form.forma_pago }}
+            </div>
+            <input name="id_cliente" id="id_cliente" value="{{ request.user.id }}">
+            <div class="col-6 mt-2">
+                <label for="">Seleccione un Banco de la lista</label>
+                {{ form.banco }}
+            </div>
+            <div class="col-6 mt-2">
+                <label for="">Titular de la Cuenta</label>
+                {{ form.titular }}
+            </div>
+            <div class="col-6 mt-2">
+                <label for="">Documento de identidad del Tiular</label>
+                {{ form.cc_titular }}
+            </div>
+
+            <div class="col-6 mt-2">
+                <label for="">Total a Pagar</label>
+                
+                <input name="id_total_pago" id="id_total_pago" value="{{ Total_Carro |intcomma }}">
+            </div>
+            <div class="col-6 mt-2">
+                <label for="">Iva</label>
+                {{ form.iva_pago }}
+            </div>
+            
+            <div class="col-12">
+                <br>
+                <button class="btn btn-lg btn-danger" type="reset">Cancelar</button>
+                <button class="btn btn-lg btn-primary" type="submit">Aceptar</button>
+                
+            </div>
+        </form>
+    </div>
+</section>
+
+
+
+<!-- <form action="" method="post" class="row">
+    {% csrf_token %}
+    <div class="col-12">
+        {{ form }}
+        <br>
+        <button class="btn btn-lg btn-danger" type="reset">Cancelar</button>
+        <button class="btn btn-lg btn-primary" type="submit">Aceptar
+        </button>
+        
+    </div>
+</form> -->
+<br>
+{% endblock %}

@@ -74,6 +74,7 @@
 
                     {% if request.session.carro.items %}
                     {% for key, value in request.session.carro.items %}
+
                     <tr class="service">
                         <td class="tableitem">
                             <p class="itemtext">{{ value.nombre }}</p>
@@ -88,12 +89,14 @@
                             <p class="itemtext">${{ value.subtotal |intcomma}}</p>
                         </td>
                     </tr>
+
                     {% endfor %}
                     {% endif %}
 
+
                     <tr class="tabletitle">
-                        
-                       
+
+
                         <td class="Rate">
                             <h2>Total</h2>
                         </td>

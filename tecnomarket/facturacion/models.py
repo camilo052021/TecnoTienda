@@ -1,6 +1,8 @@
 from django.db import models
 # Importamos el modelo de datos de usuario:
 from django.contrib.auth.models import User
+
+from pedidos.models import Producto
 # importamos los choices
 from .choices import formapago, bancos
 
@@ -29,14 +31,17 @@ class DetallePago(models.Model):
     created = models.DateField(auto_now_add=True, verbose_name="Creado el", null=True)  
     updated = models.DateField(auto_now=True, verbose_name="Actualizado el")
 
-    @property
-    def calculo_iva(self):
-        iva_pago = (self.total_pago * 0.19)
-        return iva_pago
-    def save(self):
-        self.iva_pago = self.calculo_iva
-        super (DetallePago, self).save()
-
+    
+    # def calculo_iva(self):
+    #     iva_pago = float((self.total_pago / 1.19))
+    #     return iva_pago
+    # def save(self):
+    #     self.iva_pago = float(self.calculo_iva)
+    #     super (DetallePago, self).save()
+    def valorIva(self):
+        self.iva_pago = self.total_pago / 1.19
+        return self.iva_pago
+        
     class Meta:
         verbose_name_plural ='Detalle Pago'
 
@@ -44,18 +49,35 @@ class DetallePago(models.Model):
         return f'{self.cliente} {self.total_pago}' 
 
 
+class Pedido(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    pedido = models.CharField(max_length=15)
+    cantidad = models.IntegerField(default=1)
+    total =  models.DecimalField(verbose_name = 'Total', max_digits = 20, decimal_places = 2)
+    created = models.DateTimeField(auto_now_add=True)
 
-class Factura(models.Model):
-    detalle = models.ForeignKey(DetallePago, on_delete=models.CASCADE)
-    cliente = models.ForeignKey(PerfilUsuario, on_delete=models.CASCADE)
-    item = models.CharField(verbose_name = 'Producto', max_length = 150)
-    cantidad = models.IntegerField(verbose_name = 'Cantidad')
-    precio_unitario = models.DecimalField(verbose_name = 'Precio Unitario', max_digits = 20, decimal_places = 2)
-    valor = models.DecimalField(verbose_name = 'Valor Items', max_digits = 20, decimal_places = 2)
-    subtotal = models.DecimalField(verbose_name = 'Subtotal', max_digits = 20, decimal_places = 2)
-    total = models.DecimalField(verbose_name = 'Total', max_digits = 20, decimal_places = 2)
-    iva_pago = models.DecimalField(verbose_name = 'IVA a pagar', max_digits = 20, decimal_places = 2)
-    fecha_factura = models.DateField(auto_now_add=True, verbose_name="Fecha Facturación", null=True)  
-  # Atributos de Auditoria:
-    created = models.DateField(auto_now_add=True, verbose_name="Creado el", null=True)  
-    updated = models.DateField(auto_now=True, verbose_name="Actualizado el")
+    def __str__(self):
+        return f"{self.cantidad} unidades de {self.producto.nombre_producto}"
+
+    class Meta:
+        db_table = 'pedidos'
+        verbose_name = 'Pedido'
+        verbose_name_plural = 'Pedidos'
+        ordering = ['id']
+
+
+# class Factura(models.Model):
+#     detalle = models.ForeignKey(DetallePago, on_delete=models.CASCADE)
+#     cliente = models.ForeignKey(PerfilUsuario, on_delete=models.CASCADE)
+#     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+#     cantidad = models.IntegerField(verbose_name = 'Cantidad')
+#     precio_unitario = models.DecimalField(verbose_name = 'Precio Unitario', max_digits = 20, decimal_places = 2)
+#     valor = models.DecimalField(verbose_name = 'Valor Items', max_digits = 20, decimal_places = 2)
+#     subtotal = models.DecimalField(verbose_name = 'Subtotal', max_digits = 20, decimal_places = 2)
+#     total = models.DecimalField(verbose_name = 'Total', max_digits = 20, decimal_places = 2)
+#     iva_pago = models.DecimalField(verbose_name = 'IVA a pagar', max_digits = 20, decimal_places = 2)
+#     fecha_factura = models.DateField(auto_now_add=True, verbose_name="Fecha Facturación", null=True)  
+#   # Atributos de Auditoria:
+#     created = models.DateField(auto_now_add=True, verbose_name="Creado el", null=True)  
+#     updated = models.DateField(auto_now=True, verbose_name="Actualizado el")
