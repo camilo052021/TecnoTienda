@@ -1,5 +1,4 @@
 import datetime
-
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -7,6 +6,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import HttpResponse, redirect, render
 from django.views.generic import ListView, View
 from django.views.generic.edit import CreateView
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.core.mail import send_mail
 
 from carro.carro import Carro
 from carro.context_processor import carritoCompras
@@ -87,14 +89,32 @@ def procesar_pedido(request):
     
     Pedido.objects.bulk_create(lineas_pedido)
 
-    # enviar_mail(
-    #     pedido=pedido,
-    #     lineas_pedido=lineas_pedido,
-    #     nombreusuario=request.user.username,
-    #     emailusuario=request.user.email
-    # )
+    enviar_mail(
+        pedido=pedido,
+        nombreusuario=request.user.username,
+        emailusuario=request.user.email
+    )
 
     messages.success(request, "El pedido se procesó correctamente")
     carro.limpiar_carro()
     return redirect('/')
 
+
+def enviar_mail(**kwargs):
+    asunto="Gracias por hacer el pedido"
+    mensaje = render_to_string("facturacion/factura.html",{
+        "pedido": kwargs.get("pedido"),
+        "nombreusuario": kwargs.get("nombreusuario")
+    })
+
+    mensaje_texto = strip_tags(mensaje)
+    from_email="camand5@une.net.co"
+    to=kwargs.get("emailusuario")
+
+    send_mail(
+        asunto,
+        mensaje_texto,
+        from_email,
+        [to],
+        html_message=mensaje
+    )

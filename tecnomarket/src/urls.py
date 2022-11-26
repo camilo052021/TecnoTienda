@@ -18,6 +18,9 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 
+#para poder hacer el reseteo de las contraseñas
+from django.contrib.auth import views as auth_views
+
 urlpatterns = [
     # Rutas de administracion
     path('admin/', admin.site.urls),
@@ -28,6 +31,24 @@ urlpatterns = [
     path('', include('contacto.urls')),
     path('', include('carro.urls')),
     path('', include('facturacion.urls')),
+
+
+    #path('accounts/', include('django.contrib.auth.urls')), borrar esta linea
+    path('reset_password/', 
+        auth_views.PasswordResetView.as_view(template_name='password/password_reset.html'), 
+        name='reset_password'),
+
+    path('reset_password_sent/', 
+        auth_views.PasswordResetDoneView.as_view(template_name='password/password_reset_done.html'), 
+        name='password_reset_done'),
+
+    path('reset/<uidb64>/<token>/', 
+        auth_views.PasswordResetConfirmView.as_view(template_name='password/password_reset_confirm.html'), 
+        name='password_reset_confirm'),
+
+    path('reset_password_complete/', 
+        auth_views.PasswordResetCompleteView.as_view(template_name='password/password_reset_complete.html'), 
+        name='password_reset_complete'),
 ]
 
 

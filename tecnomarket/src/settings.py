@@ -144,3 +144,8 @@ LOGOUT_REDIRECT_URL = ('login')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_HOST_USER = 'bbb6c50e29e708'
+EMAIL_HOST_PASSWORD = '0c5ff0dc7243aa'
+EMAIL_PORT = '2525'

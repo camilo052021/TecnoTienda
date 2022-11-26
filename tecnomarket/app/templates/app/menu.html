@@ -11,10 +11,15 @@
     <img class="menu" src="{% static 'img/menuiconwhite.png' %}" alt="menu" id="menu">
     <div class="contenedor_logo">
         <img class="logo" src="{% static 'img/tecnomarketpngicono.png' %}" alt="logo"> &nbsp;&nbsp;&nbsp;&nbsp;
-
+        {% if user.is_authenticated %}
         <h4>
             <a href="{% url 'profile' %}" style="color: yellow;"> Hola {{request.user}} </a>
         </h4>
+        {% else %}
+        <h4>
+            <a href="#" style="color: yellow;"> Hola Debes Registarte o loguearte</a>
+        </h4>
+        {% endif %}
 
     </div>
 
